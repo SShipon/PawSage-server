@@ -1,8 +1,9 @@
 import { JwtPayload } from 'jsonwebtoken';
 import { TPostComment } from './comment.interface';
-import { Comment } from './comment.model';
+
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
+import { Comment } from './comment.model';
 
 const createComment = async (payload: TPostComment) => {
   const result = await Comment.create(payload);

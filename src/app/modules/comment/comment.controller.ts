@@ -1,6 +1,7 @@
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { CommentServices } from './comment.service';
+import { CommentServices } from './commnet.service';
+
 
 const createComment = catchAsync(async (req, res) => {
   const result = await CommentServices.createComment(req.body);
