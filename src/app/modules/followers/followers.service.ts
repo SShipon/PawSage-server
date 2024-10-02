@@ -46,18 +46,18 @@ const getFollowerAndFollowingCount = async (loggedUser: JwtPayload) => {
 
 const getFollowedUserFromDB = async (loggedUser: JwtPayload) => {
   const followedUsers = await Followers.find({
-    userId: loggedUser.id,
-  }).populate('followerId');
+    followerId: loggedUser.id,
+  }).populate('userId');
 
   if (!followedUsers || followedUsers.length === 0) {
-    throw new AppError(httpStatus.NOT_FOUND, 'No followed users found');
+    throw new AppError(httpStatus.OK, 'No followed users found');
   }
 
   const allPosts = [];
 
   for (const followedUser of followedUsers) {
     const posts = await Post.find({
-      userId: followedUser.followerId._id,
+      userId: followedUser.userId._id,
     }).populate('userId');
     allPosts.push(...posts);
   }
@@ -65,11 +65,21 @@ const getFollowedUserFromDB = async (loggedUser: JwtPayload) => {
   return allPosts;
 };
 
-const getFollowersFromDB = async (followerId: string) => {
-  const result = await Followers.find({ followerId }).populate('userId');
+const getFollowersFromDB = async (loggedUser: JwtPayload) => {
+  const result = await Followers.find({ userId: loggedUser.id }).populate(
+    'followerId',
+  );
 
   return result;
 };
+
+const followedUserFromDB = async (loggedUser: JwtPayload) => {
+  const result = await Followers.find({ followerId: loggedUser.id }).populate(
+    'userId',
+  );
+
+  return result;
+}
 
 const unFollowIntoDB = async (query: Record<string, any>) => {
   const result = await Followers.deleteOne({
@@ -86,4 +96,5 @@ export const FollowersServices = {
   unFollowIntoDB,
   isFollowingIntoDB,
   getFollowerAndFollowingCount,
+  followedUserFromDB,
 };
