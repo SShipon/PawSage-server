@@ -13,5 +13,24 @@ router.post(
   FollowersController.following,
 );
 
+router.get('/checkFollow', FollowersController.isFollowing);
+
+router.get(
+  '/:userId',
+  auth('admin', 'user'),
+  FollowersController.getFollowedUser,
+);
+
+router.get(
+  '/:followerId',
+  auth('admin', 'user'),
+  FollowersController.getFollowers,
+);
+
+router.delete(
+  '/',
+  auth('admin', 'user'),
+  FollowersController.unFollow,
+);
 
 export const FollowersRoutes = router;
