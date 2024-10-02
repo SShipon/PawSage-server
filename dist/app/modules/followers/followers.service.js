@@ -47,22 +47,26 @@ const getFollowerAndFollowingCount = (loggedUser) => __awaiter(void 0, void 0, v
 });
 const getFollowedUserFromDB = (loggedUser) => __awaiter(void 0, void 0, void 0, function* () {
     const followedUsers = yield followers_modal_1.Followers.find({
-        userId: loggedUser.id,
-    }).populate('followerId');
+        followerId: loggedUser.id,
+    }).populate('userId');
     if (!followedUsers || followedUsers.length === 0) {
-        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'No followed users found');
+        throw new AppError_1.default(http_status_1.default.OK, 'No followed users found');
     }
     const allPosts = [];
     for (const followedUser of followedUsers) {
         const posts = yield post_modal_1.Post.find({
-            userId: followedUser.followerId._id,
+            userId: followedUser.userId._id,
         }).populate('userId');
         allPosts.push(...posts);
     }
     return allPosts;
 });
-const getFollowersFromDB = (followerId) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield followers_modal_1.Followers.find({ followerId }).populate('userId');
+const getFollowersFromDB = (loggedUser) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield followers_modal_1.Followers.find({ userId: loggedUser.id }).populate('followerId');
+    return result;
+});
+const followedUserFromDB = (loggedUser) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield followers_modal_1.Followers.find({ followerId: loggedUser.id }).populate('userId');
     return result;
 });
 const unFollowIntoDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
@@ -78,4 +82,5 @@ exports.FollowersServices = {
     unFollowIntoDB,
     isFollowingIntoDB,
     getFollowerAndFollowingCount,
+    followedUserFromDB,
 };
