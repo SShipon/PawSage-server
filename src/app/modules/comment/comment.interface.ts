@@ -6,3 +6,4 @@ export type TPostComment = {
     userId: Types.ObjectId;
     comment: string;
 }
+

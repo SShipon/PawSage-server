@@ -4,3 +4,4 @@ export type TFollowers = {
     userId: Types.ObjectId;
     followerId: Types.ObjectId;
 }
+

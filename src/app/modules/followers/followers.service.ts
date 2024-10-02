@@ -2,8 +2,7 @@
 import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import { TFollowers } from './followers.interface';
-import { Followers } from './followers.model';
-
+import { Followers } from './followers.modal';
 
 const followingIntoDB = async (payload: TFollowers) => {
   const isFollowersExist = await Followers.findOne({

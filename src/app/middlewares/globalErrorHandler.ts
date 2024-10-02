@@ -20,7 +20,7 @@ export const globalErrorHandler: ErrorRequestHandler = (
   let errorMessages: TErrorMessages = [
     {
       path: '',
-      message: 'Something went wrong',
+      message: '' || 'Something went wrong',
     },
   ];
 
