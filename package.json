@@ -1,7 +1,7 @@
 {
   "name": "assignment-6",
   "version": "1.0.0",
-  "description": "PawSage",
+  "description": "paw sage ",
   "main": "",
   "scripts": {
     "build": "tsc",
@@ -18,7 +18,7 @@
     "mongoose",
     "zod"
   ],
-  "author": "Shipon",
+  "author": "shipon bhai",
   "license": "ISC",
   "dependencies": {
     "@types/bcryptjs": "^2.4.6",
